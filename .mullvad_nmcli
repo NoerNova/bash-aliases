@@ -1,0 +1,27 @@
+mullvad() {
+  if [ -n "$1" ]; then
+    if [[ "$1" == "add" ]]; then
+      if [ -n "$2" ]; then
+        nmcli connection import type wireguard file "$2"
+      else
+        echo "please add configuration file"
+      fi
+    elif [[ "$1" == "delete" ]]; then
+      if [ -n "$2" ]; then
+        nmcli connection delete "$2"
+      else 
+        echo "please enter connection name to delete"
+      fi
+    elif [[ "$1" == "up" ]]; then
+      if [ -n "$2" ]; then
+        nmcli connection up "$2"
+      else 
+        echo "please enter connection name to connect"
+      fi
+    else 
+      echo "expected 2 arguments, add | delete | up and configuration name"
+    fi
+  else
+    echo "expected 2 arguments, add | delete | up and configuration name"
+  fi
+}
